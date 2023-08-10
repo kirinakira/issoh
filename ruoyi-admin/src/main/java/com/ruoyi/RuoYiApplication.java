@@ -16,15 +16,24 @@ public class RuoYiApplication
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(RuoYiApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  若依启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
-                " .-------.       ____     __        \n" +
-                " |  _ _   \\      \\   \\   /  /    \n" +
-                " | ( ' )  |       \\  _. /  '       \n" +
-                " |(_ o _) /        _( )_ .'         \n" +
-                " | (_,_).' __  ___(_ o _)'          \n" +
-                " |  |\\ \\  |  ||   |(_,_)'         \n" +
-                " |  | \\ `'   /|   `-'  /           \n" +
-                " |  |  \\    /  \\      /           \n" +
-                " ''-'   `'-'    `-..-'              ");
+        System.out.println("(♥◠‿◠)ﾉﾞ  起動しました   ლ(´ڡ`ლ)ﾞ  \n" +
+                "  iiii                                                     hhhhhhh             \n" +
+                " i::::i                                                    h:::::h             \n" +
+                "  iiii                                                     h:::::h             \n" +
+                "                                                           h:::::h             \n" +
+                "iiiiiii     ssssssssss       ssssssssss      ooooooooooo    h::::h hhhhh       \n" +
+                "i:::::i   ss::::::::::s    ss::::::::::s   oo:::::::::::oo  h::::hh:::::hhh    \n" +
+                " i::::i ss:::::::::::::s ss:::::::::::::s o:::::::::::::::o h::::::::::::::hh  \n" +
+                " i::::i s::::::ssss:::::ss::::::ssss:::::so:::::ooooo:::::o h:::::::hhh::::::h \n" +
+                " i::::i  s:::::s  ssssss  s:::::s  ssssss o::::o     o::::o h::::::h   h::::::h\n" +
+                " i::::i    s::::::s         s::::::s      o::::o     o::::o h:::::h     h:::::h\n" +
+                " i::::i       s::::::s         s::::::s   o::::o     o::::o h:::::h     h:::::h\n" +
+                " i::::i ssssss   s:::::s ssssss   s:::::s o::::o     o::::o h:::::h     h:::::h\n" +
+                "i::::::is:::::ssss::::::ss:::::ssss::::::so:::::ooooo:::::o h:::::h     h:::::h\n" +
+                "i::::::is::::::::::::::s s::::::::::::::s o:::::::::::::::o h:::::h     h:::::h\n" +
+                "i::::::i s:::::::::::ss   s:::::::::::ss   oo:::::::::::oo  h:::::h     h:::::h\n" +
+                "iiiiiiii  sssssssssss      sssssssssss       ooooooooooo    hhhhhhh     hhhhhhh\n" );
+
+
     }
 }
