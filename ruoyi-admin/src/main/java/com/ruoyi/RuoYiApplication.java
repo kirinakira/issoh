@@ -16,7 +16,8 @@ public class RuoYiApplication
     {
         // System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(RuoYiApplication.class, args);
-        System.out.println("(♥◠‿◠)ﾉﾞ  起動しました   ლ(´ڡ`ლ)ﾞ  \n" +
+        System.out.println("０から１を創造する会社が、いっそう良い世の中に、変えていくことを表しています。     \n" +
+                "(♥◠‿◠)ﾉﾞ  システム起動しました   ლ(´ڡ`ლ)ﾞissoh  \n" +
                 "  iiii                                                     hhhhhhh             \n" +
                 " i::::i                                                    h:::::h             \n" +
                 "  iiii                                                     h:::::h             \n" +

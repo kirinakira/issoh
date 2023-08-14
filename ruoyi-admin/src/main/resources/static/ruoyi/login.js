@@ -55,10 +55,10 @@ function validateRule() {
         },
         messages: {
             username: {
-                required: icon + "请输入您的用户名",
+                required: icon + "アカウント名を入力してください。",
             },
             password: {
-                required: icon + "请输入您的密码",
+                required: icon + "パスワードをしてください。",
             }
         }
     })
