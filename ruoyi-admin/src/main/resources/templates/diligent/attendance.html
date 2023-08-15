@@ -2,9 +2,10 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <th:block th:include="include :: header('出勤リスト')"/>
+    <th:block th:include="include :: datetimepicker-css"/>
+    <th:block th:include="include :: datetimepicker-js"/>
 </head>
-<th:block th:include="include :: datetimepicker-css"/>
-<th:block th:include="include :: datetimepicker-js"/>
+
 <body class="gray-bg">
 <div class="container-div">
     <div class="row">
@@ -23,10 +24,10 @@
                         </li>
                         <li>
                             <div class="form-group">
-                                <label class="font-noraml">日付： </label>
+                                <label class="font-noraml">日付選ぶ： </label>
                                 <div class="input-daterange input-group">
-                                    <input type="text" class="input-sm form-control" id="datetimepicker-startTime"　name="startTime" placeholder="yyyy-MM-dd"/>
-                                    <span class="input-group-addon">ー</span>
+                                    <input type="text" class="input-sm form-control" id="datetimepicker-startTime"  name="startTime" placeholder="yyyy-MM-dd"/>
+                                    <span class="input-group-addon">―</span>
                                     <input type="text" class="input-sm form-control" id="datetimepicker-endTime" name="endTime" placeholder="yyyy-MM-dd"/>
                                 </div>
                             </div>
