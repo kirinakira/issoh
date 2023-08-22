@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.issoh.attendance.mapper.HolidayMapper">
+
+
+    <insert id="batchInsertHoliday" parameterType="list">
+        insert into attendance_holiday (holiday, holiday_name)
+        VALUES
+        <foreach collection="holidayList" item="holiday" separator=",">
+            (#{holiday.holiday}, #{holiday.holidayName})
+        </foreach>
+
+    </insert>
+    <resultMap id="holidayResultMap" type="com.issoh.attendance.domain.Holiday">
+        <id property="holidayId" column="holiday_id" />
+        <result property="holiday" column="holiday" />
+        <result property="holidayName" column="holiday_name" />
+    </resultMap>
+
+</mapper>
