@@ -194,6 +194,7 @@
         <module>ruoyi-generator</module>
         <module>ruoyi-common</module>
         <module>issoh-attendance</module>
+        <module>ruoyi-attendance</module>
     </modules>
     <packaging>pom</packaging>
 

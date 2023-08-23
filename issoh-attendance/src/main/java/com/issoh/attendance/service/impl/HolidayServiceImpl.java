@@ -50,7 +50,7 @@ public class HolidayServiceImpl implements HolidayService {
             URL url = new URL(path);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.connect();
-            StringBuffer result = new StringBuffer();
+            StringBuilder result = new StringBuilder();
             //get url request
             in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             while ((line = in.readLine()) != null) {
@@ -71,8 +71,6 @@ public class HolidayServiceImpl implements HolidayService {
             }
             System.out.println(holidayList);
             return holidayList;
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.attendance.mapper.AttendanceHolidayMapper">
+    
+    <resultMap type="AttendanceHoliday" id="AttendanceHolidayResult">
+        <result property="holidayId"    column="holiday_id"    />
+        <result property="holiday"    column="holiday"    />
+        <result property="holidayName"    column="holiday_name"    />
+    </resultMap>
+
+    <sql id="selectAttendanceHolidayVo">
+        select holiday_id, holiday, holiday_name from attendance_holiday
+    </sql>
+
+    <select id="selectAttendanceHolidayList" parameterType="AttendanceHoliday" resultMap="AttendanceHolidayResult">
+        <include refid="selectAttendanceHolidayVo"/>
+        <where>  
+            <if test="holiday != null "> and holiday = #{holiday}</if>
+            <if test="holidayName != null  and holidayName != ''"> and holiday_name like concat('%', #{holidayName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectAttendanceHolidayByHolidayId" parameterType="Long" resultMap="AttendanceHolidayResult">
+        <include refid="selectAttendanceHolidayVo"/>
+        where holiday_id = #{holidayId}
+    </select>
+        
+    <insert id="insertAttendanceHoliday" parameterType="AttendanceHoliday" useGeneratedKeys="true" keyProperty="holidayId">
+        insert into attendance_holiday
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="holiday != null">holiday,</if>
+            <if test="holidayName != null and holidayName != ''">holiday_name,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="holiday != null">#{holiday},</if>
+            <if test="holidayName != null and holidayName != ''">#{holidayName},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAttendanceHoliday" parameterType="AttendanceHoliday">
+        update attendance_holiday
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="holiday != null">holiday = #{holiday},</if>
+            <if test="holidayName != null and holidayName != ''">holiday_name = #{holidayName},</if>
+        </trim>
+        where holiday_id = #{holidayId}
+    </update>
+
+    <delete id="deleteAttendanceHolidayByHolidayId" parameterType="Long">
+        delete from attendance_holiday where holiday_id = #{holidayId}
+    </delete>
+
+    <delete id="deleteAttendanceHolidayByHolidayIds" parameterType="String">
+        delete from attendance_holiday where holiday_id in 
+        <foreach item="holidayId" collection="array" open="(" separator="," close=")">
+            #{holidayId}
+        </foreach>
+    </delete>
+
+    <insert id="batchInsertHoliday" parameterType="list">
+        insert into attendance_holiday (holiday, holiday_name)
+        VALUES
+        <foreach collection="list" item="AttendanceHolidayResult" separator=",">
+            (#{holiday.holiday}, #{holiday.holidayName})
+        </foreach>
+
+    </insert>
+
+</mapper>

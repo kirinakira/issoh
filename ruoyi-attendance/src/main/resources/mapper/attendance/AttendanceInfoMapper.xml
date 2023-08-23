@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.attendance.mapper.AttendanceInfoMapper">
+    
+    <resultMap type="AttendanceInfo" id="AttendanceInfoResult">
+        <result property="attendanceId"    column="attendance_id"    />
+        <result property="employeeId"    column="employee_id"    />
+        <result property="date"    column="date"    />
+        <result property="opening"    column="opening"    />
+        <result property="closing"    column="closing"    />
+        <result property="rest"    column="rest"    />
+        <result property="weekInfo"    column="week_info"    />
+        <result property="isAttendance"    column="is_attendance"    />
+        <result property="actualWork"    column="actual_work"    />
+        <result property="dateType"    column="date_type"    />
+        <result property="holidayName"    column="holiday_name"    />
+        <result property="sentFlag"    column="sent_flag"    />
+        <result property="isComplete"    column="is_complete"    />
+        <result property="fiscalId"    column="fiscal_id"    />
+        <result property="note"    column="note"    />
+    </resultMap>
+
+    <sql id="selectAttendanceInfoVo">
+        select attendance_id, employee_id, date, opening, closing, rest, week_info, is_attendance, actual_work, date_type, holiday_name, sent_flag, is_complete, fiscal_id, note from attendance_info
+    </sql>
+
+    <select id="selectAttendanceInfoList" parameterType="AttendanceInfo" resultMap="AttendanceInfoResult">
+        <include refid="selectAttendanceInfoVo"/>
+        <where>  
+            <if test="employeeId != null "> and employee_id like concat('%', #{employeeId}, '%')</if>
+            <if test="params.beginDate != null and params.beginDate != '' and params.endDate != null and params.endDate != ''"> and date between #{params.beginDate} and #{params.endDate}</if>
+            <if test="isAttendance != null "> and is_attendance = #{isAttendance}</if>
+        </where>
+    </select>
+    
+    <select id="selectAttendanceInfoByAttendanceId" parameterType="Long" resultMap="AttendanceInfoResult">
+        <include refid="selectAttendanceInfoVo"/>
+        where attendance_id = #{attendanceId}
+    </select>
+        
+    <insert id="insertAttendanceInfo" parameterType="AttendanceInfo" useGeneratedKeys="true" keyProperty="attendanceId">
+        insert into attendance_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="employeeId != null">employee_id,</if>
+            <if test="date != null">date,</if>
+            <if test="opening != null">opening,</if>
+            <if test="closing != null">closing,</if>
+            <if test="rest != null">rest,</if>
+            <if test="weekInfo != null and weekInfo != ''">week_info,</if>
+            <if test="isAttendance != null">is_attendance,</if>
+            <if test="actualWork != null">actual_work,</if>
+            <if test="dateType != null">date_type,</if>
+            <if test="holidayName != null">holiday_name,</if>
+            <if test="sentFlag != null">sent_flag,</if>
+            <if test="isComplete != null">is_complete,</if>
+            <if test="fiscalId != null">fiscal_id,</if>
+            <if test="note != null">note,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="employeeId != null">#{employeeId},</if>
+            <if test="date != null">#{date},</if>
+            <if test="opening != null">#{opening},</if>
+            <if test="closing != null">#{closing},</if>
+            <if test="rest != null">#{rest},</if>
+            <if test="weekInfo != null and weekInfo != ''">#{weekInfo},</if>
+            <if test="isAttendance != null">#{isAttendance},</if>
+            <if test="actualWork != null">#{actualWork},</if>
+            <if test="dateType != null">#{dateType},</if>
+            <if test="holidayName != null">#{holidayName},</if>
+            <if test="sentFlag != null">#{sentFlag},</if>
+            <if test="isComplete != null">#{isComplete},</if>
+            <if test="fiscalId != null">#{fiscalId},</if>
+            <if test="note != null">#{note},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAttendanceInfo" parameterType="AttendanceInfo">
+        update attendance_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="employeeId != null">employee_id = #{employeeId},</if>
+            <if test="date != null">date = #{date},</if>
+            <if test="opening != null">opening = #{opening},</if>
+            <if test="closing != null">closing = #{closing},</if>
+            <if test="rest != null">rest = #{rest},</if>
+            <if test="weekInfo != null and weekInfo != ''">week_info = #{weekInfo},</if>
+            <if test="isAttendance != null">is_attendance = #{isAttendance},</if>
+            <if test="actualWork != null">actual_work = #{actualWork},</if>
+            <if test="dateType != null">date_type = #{dateType},</if>
+            <if test="holidayName != null">holiday_name = #{holidayName},</if>
+            <if test="sentFlag != null">sent_flag = #{sentFlag},</if>
+            <if test="isComplete != null">is_complete = #{isComplete},</if>
+            <if test="fiscalId != null">fiscal_id = #{fiscalId},</if>
+            <if test="note != null">note = #{note},</if>
+        </trim>
+        where attendance_id = #{attendanceId}
+    </update>
+
+    <delete id="deleteAttendanceInfoByAttendanceId" parameterType="Long">
+        delete from attendance_info where attendance_id = #{attendanceId}
+    </delete>
+
+    <delete id="deleteAttendanceInfoByAttendanceIds" parameterType="String">
+        delete from attendance_info where attendance_id in 
+        <foreach item="attendanceId" collection="array" open="(" separator="," close=")">
+            #{attendanceId}
+        </foreach>
+    </delete>
+
+</mapper>

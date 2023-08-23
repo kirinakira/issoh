@@ -34,6 +34,12 @@
             <groupId>com.ruoyi</groupId>
             <artifactId>ruoyi-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ruoyi</groupId>
+            <artifactId>ruoyi-attendance</artifactId>
+            <version>4.7.7</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

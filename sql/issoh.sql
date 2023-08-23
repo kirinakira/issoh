@@ -1,8 +1,7 @@
 -- ----------------------------
 -- 1AŒŸ‹Î–±•\
 -- ----------------------------
-
-drop table if exists attendance;
+drop table if exists attendance_info;
 create table attendance_info (
 attendance_id     bigint(20)       not null auto_increment  comment '‹Î–±ID',
 employee_id       bigint(20)       not null                 comment '‹Î–±ID',
@@ -10,16 +9,16 @@ date              datetime         not null                 comment 'ƒXƒPƒWƒ…[ƒ
 opening           datetime                                  comment 'n‹ÆŠÔ',
 closing           datetime                                  comment 'I‹ÆŠÔ',
 rest              decimal                                   comment '‹xŒeŠÔ',
-week              varchar          not null                 comment '—j“ú',
+week_info         varchar(20)      not null                 comment '—j“ú',
 is_attendance     int                                       comment 'oĞİ‘î(0oĞ1İ‘î)',
 actual_work       decimal                                   comment 'À“­ŠÔ',
 date_type         int                                       comment '“ú•tƒe[ƒv(0•½“ú1‹x“ú‚Qj“ú)',
-holiday_name      varchar                                   comment 'j“ú–¼',
+holiday_name      varchar(20)                               comment 'j“ú–¼',
 sent_flag         int                                       comment '“o˜^i 0–¢“o˜^1“o˜^j',
-is_complete		  int	                                    comment 'Š®¬i0–¢Š®¬1Š®¬j',		
+is_complete		  int	                                    comment 'Š®¬i0–¢Š®¬1Š®¬j',
+accounts_id		  bigint(20)	   not null                 comment 'ŒvZID',		
 primary key (attendance_id)
 ) engine=innodb auto_increment=1 comment = 'ŒŸ‹Î–±•\';
-
 
 -- ----------------------------
 -- 2A‹Î–±ó‘Ô•\
@@ -29,18 +28,19 @@ drop table if exists attendance_type;
 create table attendance_type (
 att_type_id       bigint(20)       not null auto_increment  comment '‹Î–±ó‘Ô•\ID',
 attendance_id     bigint(20)       not null                 comment '‹Î–±ID',
-code              int              default '0'              comment '0³í1’x2‘‘Ş3Œ‡‹Î4•aŒ‡5—L‹‹‹x‰É 6U‘Ö‹x'
-)
-
+code              int              default '0'              comment '0³í1’x2‘‘Ş3Œ‡‹Î4•aŒ‡5—L‹‹‹x‰É 6U‘Ö‹x',
+primary key (att_type_id)
+)engine=innodb auto_increment=1 comment = '‹Î–±ó‘Ô•\';
 -- ----------------------------
 -- 3Aj“ú•\
 -- ----------------------------
 drop table if exists sys_holiday;
 create table holiday (
-holiday_id        bigint(20)       not null                 comment 'j“úID',
+holiday_id        bigint(20)       not null auto_increment  comment 'j“úID',
 holiday           date             not null                 comment 'j“ú',
-holiday_name      varchar          not null                 comment 'j“ú–¼'
-)
+holiday_name      varchar(20)      not null                 comment 'j“ú–¼',
+primary key (holiday_id)
+)engine=innodb auto_increment=1 comment = 'j“ú•\';
 
 -- ----------------------------
 -- 4AŒŸŒˆZ•\
@@ -48,6 +48,7 @@ holiday_name      varchar          not null                 comment 'j“ú–¼'
 drop table if exists attendance_accounts;
 create table attendance_accounts (
 accounts_id       bigint(20)       not null auto_increment  comment 'ŒvZID',
+account_month	  varchar(20)	   not null                 comment 'ŒŸ',
 employee_id		  bigint(20)       not null  	            comment 'ĞˆõID',		
 attendance_day	  int	                                    comment 'o‹Î“ú”',		
 total_hour		  decimal	                                comment 'A‹ÆŠÔ',		
@@ -62,9 +63,10 @@ absenteeism		  decimal	                                comment 'Œ‡‹Î',
 sick_leave		  decimal	                                comment '•aŒ‡',		
 paid_time_off     int	                                    comment '—L‹‹‹x‰É',		
 create_time		  datetime	                                comment 'ì¬ŠÔ',		
-creater		      varchar	                                comment 'ì¬Ò',		
+creater		      varchar(20)	                            comment 'ì¬Ò',		
 del_flag       	  int	                                    comment 'íœƒtƒ‰ƒOi0³í 2íœj',		
-is_final          int	                                    comment 'ŒˆZi 0–¢ŒˆZ1ŒˆZj'		
+is_final          int	                                    comment 'ŒˆZi 0–¢ŒˆZ1ŒˆZj',
+primary key (accounts_id)		
 ) engine=innodb auto_increment=1 comment = 'ŒŸŒˆZ•\';
 
 
@@ -72,5 +74,12 @@ is_final          int	                                    comment 'ŒˆZi 0–¢Œˆ
 -- 5AĞˆõî•ñ•\
 -- ----------------------------
 drop table if exists sys_employee;
+create table sys_employee (	
+employee_id		  bigint(20)	   not null	                comment 'ĞˆõID',
+user_id        	  bigint(20)	   not null	                comment 'ƒ†[ƒUID',
+employee_type	  int	           not null default '0'     comment 'Ğˆõí—Ş(0³Ğˆõ1Œ_–ñĞˆõ2–‹Æ)',
+onboarding		  date	           not null                 comment '“üĞ“ú',	
+adjustable_breaks decimal	       default '0'              comment '’²®‰Â”\‚ÈƒuƒŒ[ƒN	'
+) engine=innodb auto_increment=1 comment = 'Ğˆõî•ñ•\';
 
 
