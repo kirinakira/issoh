@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.attendance.mapper.AttendanceHolidayMapper">
     
-    <resultMap type="AttendanceHoliday" id="AttendanceHolidayResult">
+    <resultMap type="AttendanceHoliday" id="AttendanceHoliday">
         <result property="holidayId"    column="holiday_id"    />
         <result property="holiday"    column="holiday"    />
         <result property="holidayName"    column="holiday_name"    />
@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         select holiday_id, holiday, holiday_name from attendance_holiday
     </sql>
 
-    <select id="selectAttendanceHolidayList" parameterType="AttendanceHoliday" resultMap="AttendanceHolidayResult">
+    <select id="selectAttendanceHolidayList" parameterType="AttendanceHoliday" resultMap="AttendanceHoliday">
         <include refid="selectAttendanceHolidayVo"/>
         <where>  
             <if test="holiday != null "> and holiday = #{holiday}</if>
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     
-    <select id="selectAttendanceHolidayByHolidayId" parameterType="Long" resultMap="AttendanceHolidayResult">
+    <select id="selectAttendanceHolidayByHolidayId" parameterType="Long" resultMap="AttendanceHoliday">
         <include refid="selectAttendanceHolidayVo"/>
         where holiday_id = #{holidayId}
     </select>
@@ -62,10 +62,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="batchInsertHoliday" parameterType="list">
         insert into attendance_holiday (holiday, holiday_name)
         VALUES
-        <foreach collection="list" item="AttendanceHolidayResult" separator=",">
-            (#{holiday.holiday}, #{holiday.holidayName})
+        <foreach collection="list" item="AttendanceHoliday" separator=",">
+            (#{AttendanceHoliday.holiday}, #{AttendanceHoliday.holidayName})
         </foreach>
 
     </insert>
+
+    <select id="selectCurrentYearHolidays" resultMap="AttendanceHoliday">
+        select holiday, holiday_name
+        from attendance_holiday
+        where holiday
+                  BETWEEN
+                      (SELECT CONCAT(YEAR(CURRENT_DATE()), '-01-01')) AND
+                      (SELECT CONCAT(YEAR(CURRENT_DATE()), '-12-31'));
+    </select>
 
 </mapper>

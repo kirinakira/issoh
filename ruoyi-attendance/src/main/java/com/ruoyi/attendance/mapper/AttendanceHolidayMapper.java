@@ -1,5 +1,6 @@
 package com.ruoyi.attendance.mapper;
 
+import java.util.Date;
 import java.util.List;
 import com.ruoyi.attendance.domain.AttendanceHoliday;
 
@@ -65,4 +66,11 @@ public interface AttendanceHolidayMapper
      * @return
      */
     int batchInsertHoliday(List<AttendanceHoliday> currentHoliday);
+
+    /**
+     * get holiday from database
+     *
+     * @return
+     */
+    List<AttendanceHoliday> selectCurrentYearHolidays();
 }

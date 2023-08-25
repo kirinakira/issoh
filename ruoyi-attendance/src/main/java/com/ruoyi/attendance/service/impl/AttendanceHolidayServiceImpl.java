@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.alibaba.fastjson.JSON;
@@ -147,18 +148,58 @@ public class AttendanceHolidayServiceImpl implements IAttendanceHolidayService {
         }
     }
 
+    /**
+     * @return
+     */
     @Override
     public int batchInsertHoliday() {
-        List<AttendanceHoliday> currentHoliday = getCurrentYearsHoliday();
-        if (currentHoliday != null) {
-            return attendanceHolidayMapper.batchInsertHoliday(currentHoliday);
+        //get holiday list from git hub
+        List<AttendanceHoliday> currentHolidayFromGithub = getCurrentYearsHoliday();
+        //db中祝日存在の場合
+        boolean flag = handleTheHoliday(currentHolidayFromGithub);//trueの場合、DBに中で,今年の祝日データ値が全部いない
+        if (flag && !currentHolidayFromGithub.isEmpty()) {
+            return attendanceHolidayMapper.batchInsertHoliday(currentHolidayFromGithub);
+
         }
         return 0;
     }
 
+    /**
+     * @param
+     * @return
+     */
+    private boolean handleTheHoliday(List<AttendanceHoliday> gitHolidayList) {
+        //get current year holidays from db
+        List<AttendanceHoliday> attendanceHolidaysFromDB = attendanceHolidayMapper.selectCurrentYearHolidays();
+        if (attendanceHolidaysFromDB == null || attendanceHolidaysFromDB.isEmpty()) {
+            return true;
+        }
+        if (gitHolidayList != null || !gitHolidayList.isEmpty()) {
+            for (AttendanceHoliday currentHolidayFromGit : gitHolidayList) {
+                Date holidayGit = currentHolidayFromGit.getHoliday();
+                String holidayNameGit = currentHolidayFromGit.getHolidayName();
+                for (AttendanceHoliday currentholidayFromDB : attendanceHolidaysFromDB
+                ) {
+                    Date holidayFromDB = currentholidayFromDB.getHoliday();
+                    String holidayNameFromDB = currentholidayFromDB.getHolidayName();
+                    SimpleDateFormat targetDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = targetDateFormat.format(holidayFromDB);
+                    // 日付一致場合
+                    if (holidayGit.equals(formattedDate) && holidayNameGit.equals(holidayNameFromDB)) {
+                        AttendanceHoliday diffHoliday = new AttendanceHoliday();
+                        diffHoliday.setHoliday(holidayGit);
+                        diffHoliday.setHolidayName(holidayNameGit);
+                        attendanceHolidayMapper.insertAttendanceHoliday(diffHoliday);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 
     /**
-     * change url with current year
+     * change url path with current year
      *
      * @return
      */

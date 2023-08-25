@@ -67,6 +67,7 @@ public interface IAttendanceHolidayService
 
     /**
      * batch insert into db
+     *
      * @return
      */
     int batchInsertHoliday();
